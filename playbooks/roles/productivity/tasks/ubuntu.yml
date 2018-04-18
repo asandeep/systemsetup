@@ -1,0 +1,4 @@
+- name: Fish shell
+  block:
+  - apt_repository: repo=ppa:fish-shell/release-2 state=present
+  - apt: name=fish state=present
