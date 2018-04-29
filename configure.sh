@@ -14,3 +14,8 @@ echo "localhost ansible_connection=local ansible_python_interpreter /usr/bin/env
 
 # Either set this or directly pass inventory file using -i option
 export ANSIBLE_INVENTORY=~/ansible/hosts
+
+
+# Post install configuration
+# MySQL
+mysql_secure_installation
