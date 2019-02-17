@@ -3,6 +3,7 @@
   loop: "{{ snaps }}"
   when: ansible_distribution|lower == "ubuntu"
 
+# Do not execute when already installed.
 - name: Install Zoom
   block:
   - get_url: url=https://zoom.us/client/latest/zoom_amd64.deb

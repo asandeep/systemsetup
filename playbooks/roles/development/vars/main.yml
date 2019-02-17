@@ -12,6 +12,12 @@ snaps:
 
 pip:
   - mysql-python
+  - pylint
+  - ipython
+  - npm
+
+npm_packages:
+  - gulp-cli
 
 directories:
   - workspace/git

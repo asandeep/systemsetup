@@ -8,3 +8,18 @@ packages:
   - fonts-firacode
   - variety
   - gnome-clocks
+  - tree
+
+snaps:
+  - postman
+
+gnome extensions:
+  - Panel OSD
+  - Extensions
+  - https://extensions.gnome.org/extension/118/no-topleft-hot-corner/
+  - https://extensions.gnome.org/extension/1166/extension-update-notifier/
+  - https://extensions.gnome.org/extension/508/uptime-indicator/
+  - https://extensions.gnome.org/extension/1191/battery-percentage/
+  - https://extensions.gnome.org/extension/817/battery-status/
+  - https://extensions.gnome.org/extension/906/sound-output-device-chooser/
+  - https://extensions.gnome.org/extension/1005/focus-my-window/

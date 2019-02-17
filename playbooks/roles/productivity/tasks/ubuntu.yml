@@ -1,9 +1,3 @@
-#- name: Fish shell
-#  block:
-#  - apt_repository: repo=ppa:fish-shell/release-2 state=present
-#  - apt: name=fish state=present
-
-
 - name: Add APT repositories
   apt_repository: repo="{{ item }}" update_cache=yes state=present
   loop: "{{ repositories }}"
@@ -11,11 +5,23 @@
 - name: Install APT packages
   apt: name="{{ packages }}" state=present
 
+- name: Install snaps
+  command: snap install {{ item }} --classic
+  loop: "{{ snaps }}"
+
 - name: Install Fish shell
   block:
     - apt_repository: repo=ppa:fish-shell/release-2 update_cache=yes
                       state=present
     - apt: name=fish state=present
     - shell: chsh -s /usr/bin/fish
-    - get_url: url=https://get.oh-my.fish dest=/tmp/omf_install
-    - shell: fish /tmp/omf_install --path=~/.local/share/omf --config=~/.config/omf --yes --verbose
+    #- get_url: url=https://get.oh-my.fish dest=/tmp/omf_install
+    #- shell: fish /tmp/omf_install --path=~/.local/share/omf --config=~/.config/omf --yes --verbose
+    # Use set -x to set omf settings
+    # Download nerd fonts.
+    # https://github.com/ryanoasis/nerd-fonts/releases
+    # sudo unzip <font.zip> -d /usr/share/local/fonts
+    # sudo fc-cache -fv
+    # select custom font from profile settings.
+
+# - name: Restore tweaktool settings
