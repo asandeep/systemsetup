@@ -1,4 +1,0 @@
-- name: Font legatures
-  block:
-  - homebrew_tap: name=caskroom/fonts state=present
-  - homebrew_cask: name=font-fira-code state=present

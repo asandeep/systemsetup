@@ -1,0 +1,21 @@
+- name: configure git
+  block:
+    - pause:
+        prompt: "Enter GIT username."
+      register: git_username
+    - pause:
+        promot: "Enter GIT email."
+      register: git_email
+    - git_config:
+        name: user.name
+        scope: global
+        value: git_username
+    - git_config:
+        name: user.email
+        scope: global
+        value: git_email
+
+- name: configure vscode
+  debug:
+    msg: "Will configure vscode here."
+  listen: "vscode installed"

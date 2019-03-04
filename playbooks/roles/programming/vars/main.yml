@@ -1,0 +1,25 @@
+apt_packages:
+  - python
+  # - mysql-server
+  # - libmysqlclient-dev  # Python dependency for mysql
+  # - mysql-workbench
+  # - python-pip  # Install python packages once pip is installed.
+  # - virtualenv
+  # - libssl-dev  # Dependency for python openssl package.
+
+snaps:
+  - vscode
+
+pip:
+  - mysql-python
+  - pylint
+  - ipython
+  - npm
+
+npm_packages:
+  - gulp-cli
+
+directories:
+  - workspace/git
+  - workspace/virtualenvs
+  - workspace/playground

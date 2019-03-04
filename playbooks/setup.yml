@@ -1,8 +1,9 @@
 ---
 - hosts: localhost
   # gather_facts: True
-  become: yes
+#   become: yes
   roles:
-    - development
-    - productivity
-    - communication
+    - utilities
+    # - programming
+    # - productivity
+    # - communication

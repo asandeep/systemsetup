@@ -24,4 +24,21 @@
     # sudo fc-cache -fv
     # select custom font from profile settings.
 
+    sudo apt-add-repository ppa:fish-shell/release-2
+sudo apt-get update
+sudo apt-get install fish git
+echo (which fish) | sudo tee -a /etc/shells
+chsh -s (which fish)
+curl -L http://get.oh-my.fish | fish
+omf install bobthefish
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/FiraCode.zip
+sudo unzip FiraCode.zip -d /usr/local/share/fonts/
+sudo fc-cache -fv
+set -U theme_nerd_fonts yes
+
 # - name: Restore tweaktool settings
+
+
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update -y
+sudo apt-get install oracle-java8-installer -y

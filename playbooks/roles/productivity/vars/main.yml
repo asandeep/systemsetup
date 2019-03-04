@@ -3,7 +3,6 @@ repositories:
  - ppa:peterlevi/ppa  # May be move to separate section
 
 packages:
-  - curl
   - ubuntu-gnome-desktop
   - fonts-firacode
   - variety
