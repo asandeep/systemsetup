@@ -1,2 +1,31 @@
-# - name: Install productivity tools
-- include_tasks: "{{ ansible_distribution|lower }}.yml"
+- include_role:
+    name: common
+
+- name: Fish shell path
+  command: which fish
+  register: fish_shell_path
+
+- name: Configure fish shell
+  block:
+    - name: Adding to /etc/shells
+      shell: echo {{ fish_shell_path }} | sudo tee -a /etc/shells
+    - name: Changing default shell to fish
+      command: chsh -s {{ fish_shell_path }}
+    - name: Download & install Oh-my-fish
+      shell: curl -L http://get.oh-my.fish | fish
+    - name: Installing theme - bobthefish
+      shell: omf install bobthefish
+      args:
+        executable: "{{ fish_shell_path.stdout | default(\"/usr/bin/fish\") }}"
+    - name: Enable virtualfish pluging
+      lineinfile:
+        path: "/home/{{ lookup('env','USER') }}/.config/fish/config.fish"
+        line: eval (python -m virtualfish)
+        create: yes
+
+- include: shell_extensions.yml extension="{{ item }}"
+  loop: "{{ gnome_shell_extensions }}"
+
+# sudo add-apt-repository ppa:webupd8team/java
+# sudo apt-get update -y
+# sudo apt-get install oracle-java8-installer -y

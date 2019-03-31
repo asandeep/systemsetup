@@ -1,2 +1,2 @@
-- name: Install APT packages
-  apt: name="{{ apt_packages }}" state=present
+- include_role:
+    name: common

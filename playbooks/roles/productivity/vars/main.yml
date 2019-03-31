@@ -1,24 +1,26 @@
-repositories:
- - ppa:gertvdijk/firacode
- - ppa:peterlevi/ppa  # May be move to separate section
+apt_repositories:
+  - ppa:fish-shell/release-3  # Fish shell repo
 
-packages:
-  - ubuntu-gnome-desktop
+apt_packages:
+  - fish
   - fonts-firacode
-  - variety
   - gnome-clocks
   - tree
 
 snaps:
   - postman
 
-gnome extensions:
-  - Panel OSD
-  - Extensions
-  - https://extensions.gnome.org/extension/118/no-topleft-hot-corner/
-  - https://extensions.gnome.org/extension/1166/extension-update-notifier/
-  - https://extensions.gnome.org/extension/508/uptime-indicator/
-  - https://extensions.gnome.org/extension/1191/battery-percentage/
-  - https://extensions.gnome.org/extension/817/battery-status/
-  - https://extensions.gnome.org/extension/906/sound-output-device-chooser/
-  - https://extensions.gnome.org/extension/1005/focus-my-window/
+python_packages:
+  - {name: 'virtualfish'}
+
+gnome_shell_extensions:
+  - {download_url: 'https://github.com/petres/gnome-shell-extension-extensions/archive/master.zip', install_method: "copy", copy_folder: "extensions@abteil.org"}
+  # - Panel OSD
+  # - Extensions
+  # - https://extensions.gnome.org/extension/118/no-topleft-hot-corner/
+  # - https://extensions.gnome.org/extension/1166/extension-update-notifier/
+  # - https://extensions.gnome.org/extension/508/uptime-indicator/
+  # - https://extensions.gnome.org/extension/1191/battery-percentage/
+  # - https://extensions.gnome.org/extension/817/battery-status/
+  # - https://extensions.gnome.org/extension/906/sound-output-device-chooser/
+  # - https://extensions.gnome.org/extension/1005/focus-my-window/

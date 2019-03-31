@@ -1,9 +1,10 @@
 ---
-- hosts: localhost
+- name: Configure system
+  hosts: localhost
   # gather_facts: True
-#   become: yes
+  become: yes
   roles:
     - utilities
-    # - programming
-    # - productivity
-    # - communication
+    - development
+    - productivity
+    - communication

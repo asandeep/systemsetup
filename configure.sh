@@ -10,15 +10,11 @@ OS_DIST="ubuntu"
 
 ANSIBLE_UBUNTU_PPA="ppa:ansible/ansible"
 
-# Set ansible log path
-# using env variable DEFAULT_LOG_PATH or config paramter log_path
+ANSIBLE_LOCALHOST_CONFIG_STRING="localhost ansible_connection=local ansible_python_interpreter=$(which python)"
+TMP_INVENTORY_FILE=$(mktemp --tmpdir=/tmp tmp_inventory.XXXX)
+echo "$ANSIBLE_LOCALHOST_CONFIG_STRING" | tee $TMP_INVENTORY_FILE > /dev/null
 
-# Mac OS
-# sudo pip install ansible
-
-ANSIBLE_LOCALHOST_CONFIG_STRING="localhost ansible_connection=local ansible_python_interpreter /usr/bin/env python"
 DEFAULT_PLAYBOOK="$PWD/playbooks/setup.yml"
-
 
 # Post install configuration
 # MySQL
@@ -36,45 +32,35 @@ function install_ansible() {
 }
 
 function install_ansible_ubuntu() {
-  # sudo apt-get update
   sudo apt-get install software-properties-common
   sudo apt-add-repository --yes --update $ANSIBLE_UBUNTU_PPA
   sudo apt-get install --yes ansible
 }
 
-function generate_ansible_inventory() {
-  echo "generating"
-  tmp_inventory=$(mktemp --tmpdir=/tmp tmp_inventory.XXXX)
-  echo $tmp_inventory
-  echo "$ANSIBLE_LOCALHOST_CONFIG_STRING" | tee $tmp_inventory
-  return $tmp_inventory
-}
-
 function run_playbook() {
-  inventory_file=$1
-  intractive_mode=$2
+  intractive_mode=$1
+  echo $intractive_mode
   optional_params="--ask-become-pass"
 
-  echo "Inventory file: $inventory_file"
-  if [[ -n $intractive_mode ]]; then
-    echo "ansible-playbook --step -i $inventory_file $DEFAULT_PLAYBOOK"
-    # ansible-playbook --step -i $inventory_file $DEFAULT_PLAYBOOK
+  echo "Inventory file: $TMP_INVENTORY_FILE"
+  cat $TMP_INVENTORY_FILE
+  if [[ -z $intractive_mode ]]; then
+    echo "ansible-playbook --step -i $TMP_INVENTORY_FILE $DEFAULT_PLAYBOOK"
+    ansible-playbook --check --ask-become-pass -v -i $TMP_INVENTORY_FILE $DEFAULT_PLAYBOOK
   else
-    echo "ansible-playbook -i $inventory_file $DEFAULT_PLAYBOOK"
-    # ansible-playbook -i $inventory_file $DEFAULT_PLAYBOOK
+    echo "ansible-playbook -i $TMP_INVENTORY_FILE $DEFAULT_PLAYBOOK"
+    ansible-playbook -K -i  $TMP_INVENTORY_FILE $DEFAULT_PLAYBOOK
   fi
 }
 
 function cleanup() {
-  inventory_file=$1
-  rm $inventory_file
+  rm $TMP_INVENTORY_FILE
 }
 
 function main() {
-  # install_ansible
-  inventory_file=$(generate_ansible_inventory)
-  run_playbook $inventory_file
-  cleanup $inventory_file
+  install_ansible
+  run_playbook
+  cleanup
 }
 
 main

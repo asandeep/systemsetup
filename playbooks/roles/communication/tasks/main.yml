@@ -1,13 +1,12 @@
-- name: Install snaps
-  command: snap install {{ item }} --classic
-  loop: "{{ snaps }}"
-  when: ansible_distribution|lower == "ubuntu"
+- include_role:
+    name: common
 
 # Do not execute when already installed.
 - name: Install Zoom
   block:
-  - get_url: url=https://zoom.us/client/latest/zoom_amd64.deb
-             dest=/tmp/zoom_amd64.deb
+  - get_url:
+      url: https://zoom.us/client/latest/zoom_amd64.deb
+      dest: /tmp/zoom_amd64.deb
   - apt: name=libxcb-xtest0 state=present
   - command: dpkg -i /tmp/zoom_amd64.deb
   - command: apt-get -f install warn=False

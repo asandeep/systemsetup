@@ -1,3 +1,19 @@
+apt_repositories:
+  - ppa:peterlevi/ppa  # Variety wallpaper change
+
 apt_packages:
   - whois
   - curl
+  - xclip
+  # exFAT filesystem support.
+  - exfat-fuse
+  - exfat-utils
+  - variety
+  - chrome-gnome-shell
+  - indicator-multiload  # Resource usage indicator
+
+snaps: []
+
+python_packages: []
+
+npm_packages: []

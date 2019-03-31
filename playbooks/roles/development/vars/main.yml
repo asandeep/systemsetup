@@ -1,23 +1,25 @@
 apt_packages:
   - python
+  - python-pip # prerequisite
+  - mysql-workbench
+  - mongodb
+  - npm # prerequisite
   # - mysql-server
   # - libmysqlclient-dev  # Python dependency for mysql
-  # - mysql-workbench
-  # - python-pip  # Install python packages once pip is installed.
   # - virtualenv
   # - libssl-dev  # Dependency for python openssl package.
 
 snaps:
   - vscode
 
-pip:
-  - mysql-python
-  - pylint
-  - ipython
-  - npm
+python_packages:
+  # Format: { *name: <package_name>, version: <package_version> }
+  - {name: 'pylint'}
+  - {name: 'ipython'}
+  # - mysql-python
 
 npm_packages:
-  - gulp-cli
+  - {name: 'gulp-cli'}
 
 directories:
   - workspace/git

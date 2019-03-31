@@ -1,3 +1,6 @@
+- include_role:
+    name: common
+
 - name: Check if git is installed
   apt: name=git state=present
   check_mode: true
@@ -8,14 +11,6 @@
   when: not git_installed.changed
   notify:
     - configure git
-
-- name: Install APT packages
-  apt: name="{{ apt_packages }}" state=present
-
-- name: Install snaps
-  command: snap install {{ item }} --classic
-  loop: "{{ snaps }}"
-  notify: "{{ item }} installed"
 
 # Move below to personal ansible playbook
 # - name: Create directories

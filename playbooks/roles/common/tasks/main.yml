@@ -1,0 +1,41 @@
+---
+# tasks file for common
+
+- name: Add APT repositories
+  apt_repository: repo="{{ item }}"
+  loop: "{{ apt_repositories }}"
+
+- name: Update cache
+  apt: update_cache=yes
+
+- name: Installing APT packages
+  debug:
+    msg: "{{ apt_packages }}"
+
+- name: Install APT packages
+  apt: name="{{ apt_packages }}" state=present
+  when: apt_packages is defined
+
+- name: Installing Snaps
+  debug:
+    msg: "{{ snaps }}"
+
+# TODO: Replace command with snap module which is available from ansible>=2.8.
+- name: Install Snaps
+  command: snap install {{ item }} --classic
+  notify: "{{ item }} installed"
+  loop: "{{ snaps }}"
+  when: snaps is defined
+
+- name: Install python pacakges
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+  loop: "{{ python_packages }}"
+
+- name: Install npm pacakges
+  npm:
+    name: "{{ item.name }}"
+    version: "{{ item.version | default(omit) }}"
+    global: yes
+  loop: "{{ npm_packages }}"

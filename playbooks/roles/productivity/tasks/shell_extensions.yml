@@ -1,0 +1,28 @@
+# Should run as local user.
+# Add cleanup steps
+- name: Download extension
+  get_url:
+    dest: /tmp
+    url: "{{ extension.download_url }}"
+  register: download
+
+- set_fact:
+    extension_dir: "{{ download.dest | basename | splitext | first }}"
+
+- name: Extracting extension
+  unarchive:
+    src: "{{ download.dest }}"
+    dest: /tmp
+    remote_src: yes
+
+- name: Copying extension to user local directory
+  copy:
+    src: "/tmp/{{ extension_dir }}/{{ extension.copy_folder }}"
+    dest: "/home/{{ lookup('env','USER') }}/.local/share/gnome-shell/extensions/ansible"
+  when: extension.install_method == "copy"
+
+- name: Installing extension
+  make:
+    chdir: "/tmp/{{ extension_dir }}"
+    target: install
+  when: extension.install_method == "make"
