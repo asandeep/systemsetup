@@ -18,7 +18,7 @@
 - name: Copying extension to user local directory
   copy:
     src: "/tmp/{{ extension_dir }}/{{ extension.copy_folder }}"
-    dest: "/home/{{ lookup('env','USER') }}/.local/share/gnome-shell/extensions/ansible"
+    dest: "/home/{{ lookup('env','USER') }}/.local/share/gnome-shell/extensions"
   when: extension.install_method == "copy"
 
 - name: Installing extension
