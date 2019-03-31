@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Do not break playbook execution when handler is not found.
+export ANSIBLE_ERROR_ON_MISSING_HANDLER=false
+
 PWD=$(pwd)
 
 OS_LINUX="linux"

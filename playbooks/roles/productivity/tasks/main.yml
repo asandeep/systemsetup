@@ -7,10 +7,14 @@
 
 - name: Configure fish shell
   block:
-    - name: Adding to /etc/shells
-      shell: echo {{ fish_shell_path }} | sudo tee -a /etc/shells
-    - name: Changing default shell to fish
-      command: chsh -s {{ fish_shell_path }}
+    # - name: Adding to /etc/shells
+    #   shell: echo {{ fish_shell_path.stdout }} | sudo tee -a /etc/shells
+    # - name: Changing default shell to fish
+    #   command: chsh -s {{ fish_shell_path.stdout }}
+    - user:
+        name: "{{ lookup('env', 'USER') }}"
+        shell: "{{ fish_shell_path.stdout }}"
+    # Check if omf is already installed.
     - name: Download & install Oh-my-fish
       shell: curl -L http://get.oh-my.fish | fish
     - name: Installing theme - bobthefish
